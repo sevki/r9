@@ -1102,7 +1102,6 @@ pub const BIGPGSHFT: ::core::ffi::c_int = 21 as ::core::ffi::c_int;
 pub const BIGPGSZ: ::core::ffi::c_ulonglong = (1 as ::core::ffi::c_ulonglong)
     << BIGPGSHFT;
 pub const HZ: ::core::ffi::c_int = 100 as ::core::ffi::c_int;
-#[no_mangle]
 pub static mut active: C2RustUnnamed_5 = C2RustUnnamed_5 {
     l: Lock {
         key: 0,
@@ -1119,19 +1118,13 @@ pub static mut active: C2RustUnnamed_5 = C2RustUnnamed_5 {
     ispanic: 0,
     thunderbirdsarego: 0,
 };
-#[no_mangle]
 pub static mut consdebug: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut consputs: Option<
     unsafe extern "C" fn(*mut ::core::ffi::c_char, ::core::ffi::c_int) -> (),
 > = None;
-#[no_mangle]
 pub static mut kproftimer: Option<unsafe extern "C" fn(usize_0) -> ()> = None;
-#[no_mangle]
 pub static mut mfcinit: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut mfcopen: Option<unsafe extern "C" fn(*mut Chan) -> ()> = None;
-#[no_mangle]
 pub static mut mfcread: Option<
     unsafe extern "C" fn(
         *mut Chan,
@@ -1140,7 +1133,6 @@ pub static mut mfcread: Option<
         i64_0,
     ) -> ::core::ffi::c_int,
 > = None;
-#[no_mangle]
 pub static mut mfcupdate: Option<
     unsafe extern "C" fn(
         *mut Chan,
@@ -1149,7 +1141,6 @@ pub static mut mfcupdate: Option<
         i64_0,
     ) -> (),
 > = None;
-#[no_mangle]
 pub static mut mfcwrite: Option<
     unsafe extern "C" fn(
         *mut Chan,
@@ -1158,13 +1149,10 @@ pub static mut mfcwrite: Option<
         i64_0,
     ) -> (),
 > = None;
-#[no_mangle]
 pub static mut mwait: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> = None;
-#[no_mangle]
 pub static mut proctrace: Option<
     unsafe extern "C" fn(*mut Proc, ::core::ffi::c_int, i64_0) -> (),
 > = None;
-#[no_mangle]
 pub static mut coherence: Option<unsafe extern "C" fn() -> ()> = None;
 #[inline]
 unsafe extern "C" fn externup() -> *mut Proc {
@@ -1180,7 +1168,6 @@ unsafe extern "C" fn __clobber_callee_regs() {
         options(preserves_flags, att_syntax)
     );
 }
-#[no_mangle]
 pub static mut noteidalloc: Ref = Ref {
     l: Lock {
         key: 0,
@@ -1205,7 +1192,6 @@ static mut pidalloc: Ref = Ref {
     },
     ref_0: 0,
 };
-#[no_mangle]
 pub static mut run: [Sched; 1] = [Sched {
     l: Lock {
         key: 0,
@@ -1231,7 +1217,6 @@ pub static mut run: [Sched; 1] = [Sched {
     nmach: 0,
     nrun: 0,
 }; 1];
-#[no_mangle]
 pub static mut procalloc: Procalloc = Procalloc {
     l: Lock {
         key: 0,
@@ -1247,11 +1232,8 @@ pub static mut procalloc: Procalloc = Procalloc {
     arena: ::core::ptr::null::<Proc>() as *mut Proc,
     free: ::core::ptr::null::<Proc>() as *mut Proc,
 };
-#[no_mangle]
 pub static mut schedsteals: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
-#[no_mangle]
 pub static mut scheddonates: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-#[no_mangle]
 pub static mut statename: [*mut ::core::ffi::c_char; 15] = [
     b"Dead\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
     b"Moribund\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
@@ -1272,7 +1254,6 @@ pub static mut statename: [*mut ::core::ffi::c_char; 15] = [
     b"Exotic\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
     b"Down\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
 ];
-#[no_mangle]
 pub unsafe extern "C" fn setmachsched(mut mp: *mut Mach) {
     let mut color: ::core::ffi::c_int = 0;
     color = corecolor((*mp).machno);
@@ -1287,7 +1268,6 @@ pub unsafe extern "C" fn setmachsched(mut mp: *mut Mach) {
     (*mp).sch = (&raw mut run as *mut Sched)
         .offset((color % Nsched as ::core::ffi::c_int) as isize) as *mut Sched;
 }
-#[no_mangle]
 pub unsafe extern "C" fn procsched(mut p: *mut Proc) -> *mut Sched {
     let mut pm: *mut Mach = ::core::ptr::null_mut::<Mach>();
     pm = (*p).mp;
@@ -1299,7 +1279,6 @@ pub unsafe extern "C" fn procsched(mut p: *mut Proc) -> *mut Sched {
     }
     return (*pm).sch;
 }
-#[no_mangle]
 pub unsafe extern "C" fn procinit0() {
     let mut i: ::core::ffi::c_int = 0;
     i = 0 as ::core::ffi::c_int;
@@ -1308,7 +1287,6 @@ pub unsafe extern "C" fn procinit0() {
         i += 1;
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn schedinit() {
     let mut up: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut e: *mut Edf = ::core::ptr::null_mut::<Edf>();
@@ -1394,7 +1372,6 @@ unsafe extern "C" fn stackok() {
         DONE();
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn sched() {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut sch: *mut Sched = ::core::ptr::null_mut::<Sched>();
@@ -1493,18 +1470,15 @@ pub unsafe extern "C" fn sched() {
     }
     gotolabel(&raw mut (*up).sched);
 }
-#[no_mangle]
 pub unsafe extern "C" fn anyready() -> ::core::ffi::c_int {
     return (*(*machp()).sch).runvec as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn anyhigher() -> ::core::ffi::c_int {
     let mut up: *mut Proc = externup();
     return ((*(*machp()).sch).runvec
         & !(((1 as ::core::ffi::c_int) << (*up).priority.wrapping_add(1 as u32_0))
             - 1 as ::core::ffi::c_int) as u32_0) as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn hzsched() {
     let mut up: *mut Proc = externup();
     if (*machp()).machno == 0 as ::core::ffi::c_int {
@@ -1519,7 +1493,6 @@ pub unsafe extern "C" fn hzsched() {
         (*up).delaysched = (*up).delaysched.wrapping_add(1);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn preempted() -> ::core::ffi::c_int {
     let mut up: *mut Proc = externup();
     if !up.is_null() && (*up).state == Running as ::core::ffi::c_int {
@@ -1633,7 +1606,6 @@ unsafe extern "C" fn queueproc(
         unlock(&raw mut (*sch).l);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn dequeueproc(
     mut sch: *mut Sched,
     mut rq: *mut Schedq,
@@ -1718,7 +1690,6 @@ unsafe extern "C" fn schedready(
     }
     splx(pl as u64_0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn ready(mut p: *mut Proc) {
     schedready(procsched(p), p, 0 as ::core::ffi::c_int);
 }
@@ -1829,7 +1800,6 @@ unsafe extern "C" fn steal() -> *mut Proc {
     }
     return ::core::ptr::null_mut::<Proc>();
 }
-#[no_mangle]
 pub unsafe extern "C" fn runproc() -> *mut Proc {
     let mut current_block: u64;
     let mut rq: *mut Schedq = ::core::ptr::null_mut::<Schedq>();
@@ -1929,7 +1899,6 @@ pub unsafe extern "C" fn runproc() -> *mut Proc {
     }
     return p;
 }
-#[no_mangle]
 pub unsafe extern "C" fn canpage(mut p: *mut Proc) -> ::core::ffi::c_int {
     let mut ok: ::core::ffi::c_int = 0;
     let mut sch: *mut Sched = ::core::ptr::null_mut::<Sched>();
@@ -1946,7 +1915,6 @@ pub unsafe extern "C" fn canpage(mut p: *mut Proc) -> ::core::ffi::c_int {
     spllo();
     return ok;
 }
-#[no_mangle]
 pub unsafe extern "C" fn newproc() -> *mut Proc {
     let mut up: *mut Proc = externup();
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -2042,7 +2010,6 @@ pub unsafe extern "C" fn newproc() -> *mut Proc {
     mmuprocinit(p);
     return p;
 }
-#[no_mangle]
 pub unsafe extern "C" fn procwired(mut p: *mut Proc, mut bm: ::core::ffi::c_int) {
     let mut up: *mut Proc = externup();
     let mut pp: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -2098,7 +2065,6 @@ pub unsafe extern "C" fn procwired(mut p: *mut Proc, mut bm: ::core::ffi::c_int)
     }
     qunlock(&raw mut (*up).seglock);
 }
-#[no_mangle]
 pub unsafe extern "C" fn procpriority(
     mut p: *mut Proc,
     mut pri: ::core::ffi::c_int,
@@ -2117,7 +2083,6 @@ pub unsafe extern "C" fn procpriority(
         (*p).fixedpri = 0 as ::core::ffi::c_int;
     };
 }
-#[no_mangle]
 pub unsafe extern "C" fn sleep(
     mut r: *mut Rendez,
     mut f: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ::core::ffi::c_int>,
@@ -2204,8 +2169,7 @@ unsafe extern "C" fn tfn(mut arg: *mut ::core::ffi::c_void) -> ::core::ffi::c_in
         || (*up).tfn.expect("non-null function pointer")(arg) != 0)
         as ::core::ffi::c_int;
 }
-#[no_mangle]
-pub unsafe extern "C" fn twakeup(mut _: *mut Ureg, mut t: *mut Timer) {
+pub unsafe extern "C" fn twakeup(_: *mut Ureg, mut t: *mut Timer) {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut trend: *mut Rendez = ::core::ptr::null_mut::<Rendez>();
     p = (*t).ta as *mut Proc;
@@ -2215,7 +2179,6 @@ pub unsafe extern "C" fn twakeup(mut _: *mut Ureg, mut t: *mut Timer) {
         wakeup(trend);
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn tsleep(
     mut r: *mut Rendez,
     mut fn_0: Option<
@@ -2269,7 +2232,6 @@ pub unsafe extern "C" fn tsleep(
     (*up).Timer.twhen = 0 as i64_0;
     (*up).nerrlab -= 1;
 }
-#[no_mangle]
 pub unsafe extern "C" fn wakeup(mut r: *mut Rendez) -> *mut Proc {
     let mut pl: Mpl = 0;
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -2293,7 +2255,6 @@ pub unsafe extern "C" fn wakeup(mut r: *mut Rendez) -> *mut Proc {
     splx(pl as u64_0);
     return p;
 }
-#[no_mangle]
 pub unsafe extern "C" fn postnote(
     mut p: *mut Proc,
     mut dolock: ::core::ffi::c_int,
@@ -2393,7 +2354,6 @@ pub unsafe extern "C" fn postnote(
     return ret;
 }
 pub const NBROKEN: ::core::ffi::c_int = 4 as ::core::ffi::c_int;
-#[no_mangle]
 pub static mut broken: C2RustUnnamed_6 = C2RustUnnamed_6 {
     QLock: QLock {
         use_0: Lock {
@@ -2413,7 +2373,6 @@ pub static mut broken: C2RustUnnamed_6 = C2RustUnnamed_6 {
     n: 0,
     p: [::core::ptr::null::<Proc>() as *mut Proc; 4],
 };
-#[no_mangle]
 pub unsafe extern "C" fn addbroken(mut p: *mut Proc) {
     let mut up: *mut Proc = externup();
     qlock(&raw mut broken.QLock);
@@ -2441,7 +2400,6 @@ pub unsafe extern "C" fn addbroken(mut p: *mut Proc) {
     (*p).psstate = ::core::ptr::null_mut::<::core::ffi::c_char>();
     sched();
 }
-#[no_mangle]
 pub unsafe extern "C" fn unbreak(mut p: *mut Proc) {
     let mut b: ::core::ffi::c_int = 0;
     qlock(&raw mut broken.QLock);
@@ -2467,7 +2425,6 @@ pub unsafe extern "C" fn unbreak(mut p: *mut Proc) {
     }
     qunlock(&raw mut broken.QLock);
 }
-#[no_mangle]
 pub unsafe extern "C" fn freebroken() -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
@@ -2483,7 +2440,6 @@ pub unsafe extern "C" fn freebroken() -> ::core::ffi::c_int {
     qunlock(&raw mut broken.QLock);
     return n;
 }
-#[no_mangle]
 pub unsafe extern "C" fn pexit(
     mut exitstr: *mut ::core::ffi::c_char,
     mut freemem: ::core::ffi::c_int,
@@ -2691,7 +2647,6 @@ pub unsafe extern "C" fn pexit(
         b"pexit\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
     );
 }
-#[no_mangle]
 pub unsafe extern "C" fn haswaitq(
     mut x: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
@@ -2699,7 +2654,6 @@ pub unsafe extern "C" fn haswaitq(
     p = x as *mut Proc;
     return ((*p).waitq != ::core::ptr::null_mut::<Waitq>()) as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn pwait(mut w: *mut Waitmsg) -> ::core::ffi::c_int {
     let mut up: *mut Proc = externup();
     let mut cpid: ::core::ffi::c_int = 0;
@@ -2753,7 +2707,6 @@ pub unsafe extern "C" fn pwait(mut w: *mut Waitmsg) -> ::core::ffi::c_int {
     free(wq as *mut ::core::ffi::c_void);
     return cpid;
 }
-#[no_mangle]
 pub unsafe extern "C" fn dumpaproc(mut p: *mut Proc) {
     let mut bss: usize_0 = 0;
     let mut s: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
@@ -2792,7 +2745,6 @@ pub unsafe extern "C" fn dumpaproc(mut p: *mut Proc) {
         (*p).priority,
     );
 }
-#[no_mangle]
 pub unsafe extern "C" fn procdump() {
     let mut up: *mut Proc = externup();
     let mut i: ::core::ffi::c_int = 0;
@@ -2822,7 +2774,6 @@ pub unsafe extern "C" fn procdump() {
         i += 1;
     };
 }
-#[no_mangle]
 pub unsafe extern "C" fn procflushseg(mut s: *mut Segment) {
     let mut i: ::core::ffi::c_int = 0;
     let mut ns: ::core::ffi::c_int = 0;
@@ -2874,7 +2825,6 @@ pub unsafe extern "C" fn procflushseg(mut s: *mut Segment) {
         nm += 1;
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn scheddump() {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut sch: *mut Sched = ::core::ptr::null_mut::<Sched>();
@@ -2932,7 +2882,6 @@ unsafe extern "C" fn inherit_strace(mut parent: *mut Proc, mut child: *mut Proc)
         (*child).strace_inherit = 1 as ::core::ffi::c_int;
     }
 }
-#[no_mangle]
 pub unsafe extern "C" fn kproc(
     mut name: *mut ::core::ffi::c_char,
     mut func: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
@@ -2991,7 +2940,6 @@ pub unsafe extern "C" fn kproc(
     (*p).newtlb = 1 as ::core::ffi::c_int;
     mmuflush();
 }
-#[no_mangle]
 pub unsafe extern "C" fn procctl(mut p: *mut Proc) {
     let mut up: *mut Proc = externup();
     let mut pl: Mpl = 0;
@@ -3078,7 +3026,6 @@ pub unsafe extern "C" fn procctl(mut p: *mut Proc) {
     splx(pl as u64_0);
     return;
 }
-#[no_mangle]
 pub unsafe extern "C" fn error(mut err: *mut ::core::ffi::c_char) {
     let mut up: *mut Proc = externup();
     spllo();
@@ -3100,7 +3047,6 @@ pub unsafe extern "C" fn error(mut err: *mut ::core::ffi::c_char) {
     });
     nexterror();
 }
-#[no_mangle]
 pub unsafe extern "C" fn nexterror() {
     let mut up: *mut Proc = externup();
     (*up).nerrlab -= 1;
@@ -3109,7 +3055,6 @@ pub unsafe extern "C" fn nexterror() {
             as *mut Label,
     );
 }
-#[no_mangle]
 pub unsafe extern "C" fn exhausted(mut resource: *mut ::core::ffi::c_char) {
     let mut buf: [::core::ffi::c_char; 128] = [0; 128];
     sprint(
@@ -3124,7 +3069,6 @@ pub unsafe extern "C" fn exhausted(mut resource: *mut ::core::ffi::c_char) {
     );
     error(&raw mut buf as *mut ::core::ffi::c_char);
 }
-#[no_mangle]
 pub unsafe extern "C" fn killbig(mut why: *mut ::core::ffi::c_char) {
     let mut i: ::core::ffi::c_int = 0;
     let mut x: ::core::ffi::c_int = 0;
@@ -3214,7 +3158,6 @@ pub unsafe extern "C" fn killbig(mut why: *mut ::core::ffi::c_char) {
     }
     psdecref(kp);
 }
-#[no_mangle]
 pub unsafe extern "C" fn renameuser(
     mut old: *mut ::core::ffi::c_char,
     mut new: *mut ::core::ffi::c_char,
@@ -3234,7 +3177,6 @@ pub unsafe extern "C" fn renameuser(
         i += 1;
     };
 }
-#[no_mangle]
 pub unsafe extern "C" fn accounttime() {
     let mut sch: *mut Sched = ::core::ptr::null_mut::<Sched>();
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -3286,7 +3228,6 @@ pub unsafe extern "C" fn accounttime() {
         .wrapping_add(n)
         .wrapping_div(HZ as u64_0) as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn halt() {
     if (*(*machp()).sch).nrdy != 0 as ::core::ffi::c_int {
         return;

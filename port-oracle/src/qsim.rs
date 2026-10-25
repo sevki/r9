@@ -11,11 +11,14 @@ use crate::c2rust::qlock as q;
 use core::ffi::{c_char, c_int, CStr};
 use std::cell::RefCell;
 
-struct Sim {
-    mach: Box<q::Mach>,
+pub(crate) struct Sim {
+    pub(crate) mach: Box<q::Mach>,
     scheds: u32,
     readied: Vec<c_int>,
-    prints: Vec<String>,
+    pub(crate) prints: Vec<String>,
+    /// Calls to `gotolabel`: `true` for a switch away to the scheduler,
+    /// `false` for a jump to an error handler.
+    pub(crate) jumps: Vec<bool>,
 }
 
 thread_local! {
@@ -25,7 +28,13 @@ thread_local! {
         scheds: 0,
         readied: Vec::new(),
         prints: Vec::new(),
+        jumps: Vec::new(),
     });
+}
+
+/// Run `f` on this thread's simulator state.
+pub(crate) fn with_sim<R>(f: impl FnOnce(&mut Sim) -> R) -> R {
+    SIM.with(|s| f(&mut s.borrow_mut()))
 }
 
 #[no_mangle]

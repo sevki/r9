@@ -5,6 +5,7 @@
 #![feature(extern_types, raw_ref_op, c_variadic)]
 
 pub mod c2rust;
+pub mod procsim;
 pub mod qsim;
 
 use core::ffi::{c_char, c_int, c_ulong, c_void};
