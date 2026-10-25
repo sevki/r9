@@ -5,3 +5,6 @@ edition = "2021"
 
 [dependencies]
 bitflags = "*"
+
+[dev-dependencies]
+port-oracle = { path = "../port-oracle" }
