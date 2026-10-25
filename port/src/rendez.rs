@@ -217,17 +217,17 @@ mod tests {
                     }
                 }
 
-                for r in 0..RENDS {
+                for (r, rend) in rends.iter().enumerate() {
                     assert_eq!(
                         oracle.sleeper(r),
-                        rends[r].sleeper().copied(),
+                        rend.sleeper().copied(),
                         "{}",
                         ctx(&format!("r{r}"), &state)
                     );
                 }
-                for p in 0..PROCS {
-                    assert_eq!(oracle.state(p), state[p], "{}", ctx(&format!("p{p}"), &state));
-                    if state[p] != State::Wakeme {
+                for (p, &st) in state.iter().enumerate() {
+                    assert_eq!(oracle.state(p), st, "{}", ctx(&format!("p{p}"), &state));
+                    if st != State::Wakeme {
                         // A process that isn't asleep isn't sleeping anywhere.
                         assert_eq!(
                             oracle.sleeping_on(p),
