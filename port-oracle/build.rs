@@ -24,7 +24,8 @@ fn main() {
         // signed-int sum in ipchksum.
         .warnings(false);
     // Prefix the C entry points so they don't clash with the c2rust copies.
-    for f in ["mul64fract", "ipchksum", "latin1", "unicode", "initmark", "notemark", "seprintmark"] {
+    for f in ["mul64fract", "ipchksum", "latin1", "unicode", "initmark", "notemark", "seprintmark"]
+    {
         build.define(f, format!("c_{f}").as_str());
     }
     build.compile("harvey_oracle");
