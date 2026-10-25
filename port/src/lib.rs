@@ -5,3 +5,4 @@
 pub mod dat;
 pub mod devcons;
 pub mod mcslock;
+pub mod mul64fract;
