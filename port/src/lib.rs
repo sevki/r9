@@ -4,7 +4,8 @@
 
 pub mod dat;
 pub mod devcons;
-pub mod mcslock;
-pub mod mul64fract;
 pub mod ipchksum;
 pub mod latin1;
+pub mod mcslock;
+pub mod mul64fract;
+pub mod watermarks;
