@@ -797,7 +797,6 @@ pub struct C2RustUnnamed_0 {
     pub ispanic: ::core::ffi::c_int,
     pub thunderbirdsarego: ::core::ffi::c_int,
 }
-#[no_mangle]
 pub static mut active: C2RustUnnamed_0 = C2RustUnnamed_0 {
     l: Lock {
         key: 0,
@@ -814,19 +813,13 @@ pub static mut active: C2RustUnnamed_0 = C2RustUnnamed_0 {
     ispanic: 0,
     thunderbirdsarego: 0,
 };
-#[no_mangle]
 pub static mut consdebug: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut consputs: Option<
     unsafe extern "C" fn(*mut ::core::ffi::c_char, ::core::ffi::c_int) -> (),
 > = None;
-#[no_mangle]
 pub static mut kproftimer: Option<unsafe extern "C" fn(usize_0) -> ()> = None;
-#[no_mangle]
 pub static mut mfcinit: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut mfcopen: Option<unsafe extern "C" fn(*mut Chan) -> ()> = None;
-#[no_mangle]
 pub static mut mfcread: Option<
     unsafe extern "C" fn(
         *mut Chan,
@@ -835,22 +828,16 @@ pub static mut mfcread: Option<
         i64_0,
     ) -> ::core::ffi::c_int,
 > = None;
-#[no_mangle]
 pub static mut mfcupdate: Option<
     unsafe extern "C" fn(*mut Chan, *mut ::core::ffi::c_uchar, ::core::ffi::c_int, i64_0) -> (),
 > = None;
-#[no_mangle]
 pub static mut mfcwrite: Option<
     unsafe extern "C" fn(*mut Chan, *mut ::core::ffi::c_uchar, ::core::ffi::c_int, i64_0) -> (),
 > = None;
-#[no_mangle]
 pub static mut mwait: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> = None;
-#[no_mangle]
 pub static mut proctrace: Option<unsafe extern "C" fn(*mut Proc, ::core::ffi::c_int, i64_0) -> ()> =
     None;
-#[no_mangle]
 pub static mut coherence: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub unsafe extern "C" fn ipchksum(
     mut vptr: *const ::core::ffi::c_void,
     mut nbytes: ::core::ffi::c_ulong,

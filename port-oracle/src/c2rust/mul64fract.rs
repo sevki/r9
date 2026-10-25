@@ -7,7 +7,6 @@
     unused_mut
 )]
 pub type u64_0 = ::core::ffi::c_ulonglong;
-#[no_mangle]
 pub unsafe extern "C" fn mul64fract(mut r: *mut u64_0, mut a: u64_0, mut b: u64_0) {
     let mut bh: u64_0 = 0;
     let mut bl: u64_0 = 0;
