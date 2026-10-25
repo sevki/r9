@@ -7,7 +7,7 @@
  * in the LICENSE file.
  */
 
-#include "oracle.h"
+#include "u.h"
 
 /* mul64fract(u64*r, u64 a, u64 b)
  *
