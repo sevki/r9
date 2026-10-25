@@ -3,6 +3,9 @@
 //! (`c2rust`). Both expose the same small API so a test can run the same
 //! input through each.
 #![feature(extern_types, raw_ref_op, c_variadic)]
+// Each generated file declares the C types it needs itself, so the same
+// extern function appears with distinct but identically laid out types.
+#![allow(clashing_extern_declarations)]
 
 pub mod c2rust;
 pub mod procsim;
