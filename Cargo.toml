@@ -4,6 +4,9 @@ members = [
     "port",
     "xtask"
 ]
+# Host-only oracle for differential tests; it is a dev-dependency of `port`
+# and must not be built for the bare-metal target.
+exclude = ["port-oracle"]
 
 [profile.dev]
 panic = "abort"
