@@ -8,4 +8,5 @@ pub mod ipchksum;
 pub mod latin1;
 pub mod mcslock;
 pub mod mul64fract;
+pub mod qlock;
 pub mod watermarks;
