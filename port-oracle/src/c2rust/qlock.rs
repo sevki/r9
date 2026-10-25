@@ -883,7 +883,6 @@ pub const SEdf: Tevent = 2;
 pub const SRelease: Tevent = 1;
 pub const SAdmit: Tevent = 0;
 pub const nil: *mut ::core::ffi::c_void = ::core::ptr::null_mut::<::core::ffi::c_void>();
-#[no_mangle]
 pub static mut active: C2RustUnnamed_2 = C2RustUnnamed_2 {
     l: Lock {
         key: 0,
@@ -900,19 +899,13 @@ pub static mut active: C2RustUnnamed_2 = C2RustUnnamed_2 {
     ispanic: 0,
     thunderbirdsarego: 0,
 };
-#[no_mangle]
 pub static mut consdebug: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut consputs: Option<
     unsafe extern "C" fn(*mut ::core::ffi::c_char, ::core::ffi::c_int) -> (),
 > = None;
-#[no_mangle]
 pub static mut kproftimer: Option<unsafe extern "C" fn(usize_0) -> ()> = None;
-#[no_mangle]
 pub static mut mfcinit: Option<unsafe extern "C" fn() -> ()> = None;
-#[no_mangle]
 pub static mut mfcopen: Option<unsafe extern "C" fn(*mut Chan) -> ()> = None;
-#[no_mangle]
 pub static mut mfcread: Option<
     unsafe extern "C" fn(
         *mut Chan,
@@ -921,20 +914,15 @@ pub static mut mfcread: Option<
         i64_0,
     ) -> ::core::ffi::c_int,
 > = None;
-#[no_mangle]
 pub static mut mfcupdate: Option<
     unsafe extern "C" fn(*mut Chan, *mut ::core::ffi::c_uchar, ::core::ffi::c_int, i64_0) -> (),
 > = None;
-#[no_mangle]
 pub static mut mfcwrite: Option<
     unsafe extern "C" fn(*mut Chan, *mut ::core::ffi::c_uchar, ::core::ffi::c_int, i64_0) -> (),
 > = None;
-#[no_mangle]
 pub static mut mwait: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> = None;
-#[no_mangle]
 pub static mut proctrace: Option<unsafe extern "C" fn(*mut Proc, ::core::ffi::c_int, i64_0) -> ()> =
     None;
-#[no_mangle]
 pub static mut coherence: Option<unsafe extern "C" fn() -> ()> = None;
 #[inline]
 unsafe extern "C" fn externup() -> *mut Proc {
@@ -943,7 +931,6 @@ unsafe extern "C" fn externup() -> *mut Proc {
     splx(pl as u64_0);
     return proc_0;
 }
-#[no_mangle]
 pub static mut qlockstats: QLockstats = QLockstats {
     rlock: 0,
     rlockq: 0,
@@ -958,7 +945,6 @@ unsafe extern "C" fn lockstat(mut pc: usize_0, mut w: u64_0) {
 unsafe extern "C" fn slockstat(mut pc: usize_0, mut w: u64_0) {
     addwaitstat(pc, w, WSslock as ::core::ffi::c_int);
 }
-#[no_mangle]
 pub unsafe extern "C" fn qlock(mut q: *mut QLock) {
     let mut up: *mut Proc = externup();
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -1012,7 +998,6 @@ pub unsafe extern "C" fn qlock(mut q: *mut QLock) {
     sched();
     lockstat(0 as ::core::ffi::c_int as usize_0, t0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn canqlock(mut q: *mut QLock) -> ::core::ffi::c_int {
     if canlock(&raw mut (*q).use_0) == 0 {
         return 0 as ::core::ffi::c_int;
@@ -1026,7 +1011,6 @@ pub unsafe extern "C" fn canqlock(mut q: *mut QLock) -> ::core::ffi::c_int {
     unlock(&raw mut (*q).use_0);
     return 1 as ::core::ffi::c_int;
 }
-#[no_mangle]
 pub unsafe extern "C" fn qunlock(mut q: *mut QLock) {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut t0: u64_0 = 0;
@@ -1057,7 +1041,6 @@ pub unsafe extern "C" fn qunlock(mut q: *mut QLock) {
     (*q).pc = 0 as usize_0;
     unlock(&raw mut (*q).use_0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn rlock(mut q: *mut RWlock) {
     let mut up: *mut Proc = externup();
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -1093,7 +1076,6 @@ pub unsafe extern "C" fn rlock(mut q: *mut RWlock) {
     sched();
     lockstat(0 as ::core::ffi::c_int as usize_0, t0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn runlock(mut q: *mut RWlock) {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut t0: u64_0 = 0;
@@ -1119,7 +1101,6 @@ pub unsafe extern "C" fn runlock(mut q: *mut RWlock) {
     unlock(&raw mut (*q).use_0);
     ready(p);
 }
-#[no_mangle]
 pub unsafe extern "C" fn wlock(mut q: *mut RWlock) {
     let mut up: *mut Proc = externup();
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
@@ -1157,7 +1138,6 @@ pub unsafe extern "C" fn wlock(mut q: *mut RWlock) {
     sched();
     lockstat(0 as ::core::ffi::c_int as usize_0, t0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn wunlock(mut q: *mut RWlock) {
     let mut p: *mut Proc = ::core::ptr::null_mut::<Proc>();
     let mut t0: u64_0 = 0;
@@ -1196,7 +1176,6 @@ pub unsafe extern "C" fn wunlock(mut q: *mut RWlock) {
     (*q).writer = 0 as ::core::ffi::c_int;
     unlock(&raw mut (*q).use_0);
 }
-#[no_mangle]
 pub unsafe extern "C" fn canrlock(mut q: *mut RWlock) -> ::core::ffi::c_int {
     let mut t0: u64_0 = 0;
     if canlock(&raw mut (*q).use_0) == 0 {

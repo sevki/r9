@@ -140,11 +140,7 @@ impl World {
             .collect();
         // SAFETY: all-zero is the initial state of both locks.
         unsafe {
-            Self {
-                procs,
-                ql: Box::new(core::mem::zeroed()),
-                rw: Box::new(core::mem::zeroed()),
-            }
+            Self { procs, ql: Box::new(core::mem::zeroed()), rw: Box::new(core::mem::zeroed()) }
         }
     }
 
@@ -177,7 +173,11 @@ impl World {
 
     pub fn qlock(&mut self, p: usize) -> Step {
         // SAFETY: `ql` is a valid QLock and `p` the current process.
-        self.run(p, |w| unsafe { q::qlock(&mut *w.ql) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::qlock(&mut *w.ql);
+            0
+        })
+        .1
     }
 
     pub fn canqlock(&mut self, p: usize) -> (bool, Step) {
@@ -188,12 +188,20 @@ impl World {
 
     pub fn qunlock(&mut self, p: usize) -> Step {
         // SAFETY: as above.
-        self.run(p, |w| unsafe { q::qunlock(&mut *w.ql) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::qunlock(&mut *w.ql);
+            0
+        })
+        .1
     }
 
     pub fn rlock(&mut self, p: usize) -> Step {
         // SAFETY: as above, for `rw`.
-        self.run(p, |w| unsafe { q::rlock(&mut *w.rw) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::rlock(&mut *w.rw);
+            0
+        })
+        .1
     }
 
     pub fn canrlock(&mut self, p: usize) -> (bool, Step) {
@@ -204,17 +212,29 @@ impl World {
 
     pub fn runlock(&mut self, p: usize) -> Step {
         // SAFETY: as above.
-        self.run(p, |w| unsafe { q::runlock(&mut *w.rw) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::runlock(&mut *w.rw);
+            0
+        })
+        .1
     }
 
     pub fn wlock(&mut self, p: usize) -> Step {
         // SAFETY: as above.
-        self.run(p, |w| unsafe { q::wlock(&mut *w.rw) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::wlock(&mut *w.rw);
+            0
+        })
+        .1
     }
 
     pub fn wunlock(&mut self, p: usize) -> Step {
         // SAFETY: as above.
-        self.run(p, |w| unsafe { q::wunlock(&mut *w.rw) as c_int }).1
+        self.run(p, |w| unsafe {
+            q::wunlock(&mut *w.rw);
+            0
+        })
+        .1
     }
 
     /// `(locked, waiting processes in queue order)` of the `QLock`.
@@ -241,5 +261,49 @@ impl World {
             p = next;
         }
         (self.rw.readers as u32, self.rw.writer != 0, queue)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn qlock_hands_off_in_fifo_order() {
+        let mut w = World::new(3);
+        assert!(!w.qlock(0).blocked);
+        assert_eq!(w.qstate(), (true, vec![]));
+        assert!(w.qlock(1).blocked);
+        assert!(w.qlock(2).blocked);
+        assert_eq!(w.qstate(), (true, vec![1, 2]));
+        assert!(!w.canqlock(0).0);
+
+        // Unlocking hands the lock straight to the head waiter.
+        assert_eq!(w.qunlock(0).readied, vec![1]);
+        assert_eq!(w.qstate(), (true, vec![2]));
+        assert_eq!(w.qunlock(1).readied, vec![2]);
+        assert!(w.qunlock(2).readied.is_empty());
+        assert_eq!(w.qstate(), (false, vec![]));
+        assert!(w.canqlock(0).0);
+    }
+
+    #[test]
+    fn rwlock_readers_share_and_writers_exclude() {
+        let mut w = World::new(4);
+        assert!(!w.rlock(0).blocked);
+        assert!(!w.rlock(1).blocked);
+        assert!(w.wlock(2).blocked);
+        // A waiting writer keeps new readers out.
+        assert!(!w.canrlock(3).0);
+        assert!(w.rlock(3).blocked);
+        assert_eq!(w.rwstate(), (2, false, vec![(2, Waiter::Writer), (3, Waiter::Reader)]));
+
+        assert!(w.runlock(0).readied.is_empty());
+        // The last reader out starts the writer.
+        assert_eq!(w.runlock(1).readied, vec![2]);
+        assert_eq!(w.rwstate(), (0, true, vec![(3, Waiter::Reader)]));
+        // The writer leaving wakes the queued reader.
+        assert_eq!(w.wunlock(2).readied, vec![3]);
+        assert_eq!(w.rwstate(), (1, false, vec![]));
     }
 }

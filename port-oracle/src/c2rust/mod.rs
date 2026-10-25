@@ -13,3 +13,5 @@ pub mod latin1;
 pub mod mul64fract;
 #[rustfmt::skip]
 pub mod watermarks;
+#[rustfmt::skip]
+pub mod qlock;

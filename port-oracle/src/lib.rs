@@ -2,9 +2,10 @@
 //! built with `cc` (`c`), and the unmodified c2rust translation of it
 //! (`c2rust`). Both expose the same small API so a test can run the same
 //! input through each.
-#![feature(extern_types, raw_ref_op)]
+#![feature(extern_types, raw_ref_op, c_variadic)]
 
 pub mod c2rust;
+pub mod qsim;
 
 use core::ffi::{c_char, c_int, c_ulong, c_void};
 
@@ -123,7 +124,9 @@ mod tests {
             super::c::mul64fract(3 << 31, 5 << 32),
             super::translated::mul64fract(3 << 31, 5 << 32)
         );
-        assert_eq!(super::c::ipchksum(b"abc"), super::translated::ipchksum(b"abc"));
+        // Like the C, ipchksum reads u16s, so the buffer must be 2-aligned.
+        let data = b"abc".to_vec();
+        assert_eq!(super::c::ipchksum(&data), super::translated::ipchksum(&data));
         let k = [u32::from(b'\''), u32::from(b'e')];
         assert_eq!(super::c::latin1(&k), super::translated::latin1(&k));
         assert_eq!(super::c::latin1(&k), 'é' as i32);
